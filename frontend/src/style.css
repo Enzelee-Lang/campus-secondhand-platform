@@ -1,0 +1,392 @@
+@import "tailwindcss";
+
+/* ============ 旧易货设计语言 ============
+   Primary:   #2dd4bf (teal-400) → #0d9488 (teal-600)
+   Accent:    #ef4444 (red-500) for prices
+   Background:#f8f9fa (light gray)
+   Card:      white + subtle shadow
+   Font:      Noto Sans SC
+======================================== */
+
+html, body, #app { height: 100%; }
+
+body {
+  font-family: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", -apple-system, BlinkMacSystemFont, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  background: #f8f9fa;
+  color: #1b1b1e;
+  font-size: 14px;
+  line-height: 1.6;
+}
+
+/* ============ 卡片（简洁白色+微阴影） ============ */
+.card {
+  @apply bg-white rounded-lg border border-gray-100;
+  box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.card-hover:hover {
+  box-shadow: 0 4px 16px -4px rgba(0,0,0,0.08), 0 1px 2px rgba(0,0,0,0.04);
+}
+.card-hover-lift:hover {
+  box-shadow: 0 8px 24px -8px rgba(0,0,0,0.1), 0 1px 2px rgba(0,0,0,0.04);
+  transform: translateY(-2px);
+}
+
+/* ============ 按钮 ============ */
+.btn-primary {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition;
+  background: #10b981;
+  color: white;
+  border: none;
+  transition: all 0.2s ease;
+}
+.btn-primary:hover {
+  background: #059669;
+  box-shadow: 0 4px 12px -2px rgba(16, 185, 129, 0.4);
+}
+.btn-primary:active {
+  transform: translateY(0);
+}
+.btn-primary:disabled {
+  background: #cbd5e1;
+  cursor: not-allowed;
+  box-shadow: none;
+}
+
+.btn-ghost {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition;
+  background: #f1f5f9;
+  color: #475569;
+}
+.btn-ghost:hover {
+  background: #e2e8f0;
+}
+
+.btn-outline {
+  @apply inline-flex items-center justify-center gap-2 px-4 py-2 rounded-lg text-sm font-medium transition;
+  background: white;
+  color: #475569;
+  border: 1px solid #e2e8f0;
+}
+.btn-outline:hover {
+  border-color: #10b981;
+  color: #059669;
+}
+
+/* 旧易货风格：绿色主按钮 */
+.btn-green {
+  background: #10b981;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-green:hover { background: #059669; box-shadow: 0 4px 12px -2px rgba(16,185,129,0.4); }
+
+/* 旧易货风格：红色价格按钮 */
+.btn-red {
+  background: #ef4444;
+  color: white;
+  border-radius: 6px;
+  padding: 8px 18px;
+  font-size: 14px;
+  font-weight: 500;
+  border: none;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-red:hover { background: #dc2626; }
+
+/* ============ 标签 ============ */
+.tag {
+  @apply inline-flex items-center px-2 py-0.5 rounded text-xs font-medium;
+}
+.tag-red    { background: #fef2f2; color: #dc2626; }
+.tag-green  { background: #ecfdf5; color: #059669; }
+.tag-blue   { background: #eff6ff; color: #2563eb; }
+.tag-gray   { background: #f1f5f9; color: #64748b; }
+.tag-orange { background: #fff7ed; color: #ea580c; }
+.tag-teal   { background: #f0fdfa; color: #0d9488; }
+
+/* ============ 输入框 ============ */
+.input {
+  @apply w-full px-3 py-2 rounded-lg text-sm;
+  background: white;
+  border: 1px solid #e2e8f0;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+.input:focus {
+  outline: none;
+  border-color: #10b981;
+  box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.12);
+}
+
+/* ============ 价格样式 ============ */
+.price-current {
+  color: #e76f51;
+  font-weight: 700;
+}
+.price-original {
+  color: #94a3b8;
+  text-decoration: line-through;
+  font-size: 0.85em;
+}
+
+/* ============ 导航链接 ============ */
+.nav-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 12px;
+  border-radius: 8px;
+  font-size: 14px;
+  color: #475569;
+  transition: all 0.15s ease;
+  text-decoration: none;
+}
+.nav-link:hover {
+  background: #f1f5f9;
+  color: #1b1b1e;
+}
+.nav-link.active {
+  background: #f0fdfa;
+  color: #0d9488;
+  font-weight: 600;
+}
+.nav-link.active::before {
+  content: '';
+  width: 3px;
+  height: 18px;
+  border-radius: 2px;
+  background: #10b981;
+  margin-right: -9px;
+}
+
+/* ============ 分类图标链接 ============ */
+.cat-link {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 20px 12px;
+  border-radius: 12px;
+  background: white;
+  border: 1px solid #f1f5f9;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+.cat-link:hover {
+  border-color: #d1fae5;
+  background: #f0fdfa;
+  transform: translateY(-2px);
+}
+.cat-icon {
+  font-size: 28px;
+  line-height: 1;
+}
+.cat-name {
+  font-size: 13px;
+  color: #475569;
+  font-weight: 500;
+}
+
+/* ============ 商品卡（旧易货风格） ============ */
+.product-card {
+  background: white;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+  box-shadow: rgba(27, 27, 30, 0.06) 0px 1px 3px 0px;
+  transition: all 0.25s ease;
+  cursor: pointer;
+}
+.product-card:hover {
+  box-shadow: rgba(27, 27, 30, 0.1) 0px 4px 12px 0px;
+  transform: translateY(-2px);
+}
+.product-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  background: #f8fafc;
+  overflow: hidden;
+}
+.product-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.4s ease;
+}
+.product-card:hover .product-img img {
+  transform: scale(1.05);
+}
+.product-badge {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 3px 8px;
+  border-radius: 4px;
+  font-size: 11px;
+  font-weight: 500;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  backdrop-filter: blur(4px);
+}
+.product-info {
+  padding: 12px 14px 14px;
+}
+.product-title {
+  font-size: 13px;
+  font-weight: 600;
+  color: #1b1b1e;
+  line-height: 1.4;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+}
+.product-meta {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #94a3b8;
+}
+.product-price-row {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  margin-top: 8px;
+}
+.product-price {
+  font-size: 18px;
+  font-weight: 700;
+  color: #e76f51;
+}
+.product-original {
+  font-size: 12px;
+  color: #cbd5e1;
+  text-decoration: line-through;
+}
+.product-extra {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 8px;
+  font-size: 11px;
+  color: #94a3b8;
+}
+
+/* ============ 滚动条 ============ */
+::-webkit-scrollbar { width: 6px; height: 6px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 3px;
+}
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+/* ============ 动画 ============ */
+@keyframes fadeIn { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(12px) }
+  to { opacity: 1; transform: translateY(0) }
+}
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.96) }
+  to { opacity: 1; transform: scale(1) }
+}
+.anim-fade   { animation: fadeIn 0.3s ease-out both }
+.anim-up     { animation: fadeInUp 0.4s ease-out both }
+.anim-scale  { animation: scaleIn 0.25s ease-out both }
+.delay-50  { animation-delay: 50ms }
+.delay-100 { animation-delay: 100ms }
+.delay-150 { animation-delay: 150ms }
+.delay-200 { animation-delay: 200ms }
+
+/* ============ 模态 ============ */
+.modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(17, 24, 39, 0.45);
+  display: flex; align-items: center; justify-content: center;
+  z-index: 50;
+  animation: fadeIn 0.2s ease-out;
+}
+.modal-panel {
+  animation: scaleIn 0.25s ease-out;
+}
+
+/* ============ Toast ============ */
+.toast-enter {
+  animation: fadeInUp 0.3s ease-out;
+}
+
+/* ============ Hero 搜索 ============ */
+.hero-search {
+  display: flex;
+  max-width: 520px;
+  margin: 24px auto 0;
+  background: white;
+  border-radius: 999px;
+  box-shadow: 0 4px 20px -4px rgba(0,0,0,0.08);
+  overflow: hidden;
+  border: 1px solid #f1f5f9;
+}
+.hero-search input {
+  flex: 1;
+  border: none;
+  padding: 14px 20px;
+  font-size: 15px;
+  background: transparent;
+  outline: none;
+  color: #1b1b1e;
+}
+.hero-search input::placeholder { color: #94a3b8; }
+.hero-search button {
+  width: 52px;
+  height: 52px;
+  border: none;
+  background: #10b981;
+  color: white;
+  font-size: 18px;
+  cursor: pointer;
+  transition: background 0.2s ease;
+}
+.hero-search button:hover { background: #059669; }
+
+/* ============ 热门标签 ============ */
+.hot-tags {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 14px;
+  font-size: 13px;
+  color: #64748b;
+}
+.hot-tags a {
+  color: #64748b;
+  text-decoration: none;
+  transition: color 0.15s;
+}
+.hot-tags a:hover { color: #0d9488; }
+
+/* ============ 面包屑 ============ */
+.breadcrumb {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 13px;
+  color: #94a3b8;
+}
+.breadcrumb a { color: #64748b; text-decoration: none; }
+.breadcrumb a:hover { color: #0d9488; }
+.breadcrumb .sep { color: #cbd5e1; }
+.breadcrumb .current { color: #1b1b1e; font-weight: 500; }

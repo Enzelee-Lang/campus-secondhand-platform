@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>校园二手物品交易系统 - 后端 API 调用控制台</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+  body{background:#0d1117;color:#c9d1d9;padding:24px 32px}
+  h1{font-size:22px;color:#58a6ff;margin-bottom:4px}
+  .sub{color:#8b949e;font-size:13px;margin-bottom:24px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-bottom:18px}
+  .card{background:#161b22;border:1px solid #30363d;border-radius:8px;overflow:hidden}
+  .head{padding:10px 14px;border-bottom:1px solid #30363d;display:flex;align-items:center;gap:10px;background:#1c2128}
+  .tag{font-size:11px;padding:3px 9px;border-radius:4px;font-weight:700;color:#fff;letter-spacing:.5px}
+  .GET{background:#1f6feb}
+  .POST{background:#2da44e}
+  .PUT{background:#d29922}
+  .DELETE{background:#cf222e}
+  .url{font-family:Consolas,monospace;color:#e6edf3;font-size:13px;flex:1}
+  .body{padding:12px 14px}
+  .label{color:#8b949e;font-size:11px;margin-bottom:4px;text-transform:uppercase;letter-spacing:.5px}
+  .req{background:#0d1117;border:1px solid #30363d;padding:8px 10px;border-radius:4px;font-family:Consolas,monospace;font-size:12px;color:#79c0ff;white-space:pre-wrap;word-break:break-all}
+  .resp{background:#0d1117;border:1px solid #30363d;padding:8px 10px;border-radius:4px;font-family:Consolas,monospace;font-size:12px;color:#7ee787;white-space:pre-wrap;word-break:break-all;max-height:220px;overflow:auto}
+  .status{display:inline-block;font-size:11px;padding:2px 8px;border-radius:3px;background:#033a16;color:#56d364;font-weight:600;margin-left:8px}
+  table{width:100%;border-collapse:collapse;font-size:12px}
+  th,td{padding:6px 8px;border-bottom:1px solid #21262d;text-align:left}
+  th{color:#8b949e;font-weight:500;background:#0d1117}
+  td{color:#c9d1d9}
+  .footer{margin-top:24px;text-align:center;color:#6e7681;font-size:11px;border-top:1px solid #21262d;padding-top:12px}
+</style>
+</head>
+<body>
+<h1>🚀 校园二手物品交易系统 · 后端 API 实时调用控制台</h1>
+<p class="sub">Server: <b>http://localhost:8080</b> &nbsp;|&nbsp; Spring Boot 3.4.5 + JPA + MySQL 9.5 &nbsp;|&nbsp; 截图时间: <span id="t"></span></p>
+
+<div class="row">
+  <div class="card">
+    <div class="head"><span class="tag POST">POST</span><span class="url">/api/auth/login</span><span class="status">200 OK · 2.3ms</span></div>
+    <div class="body">
+      <div class="label">Request Body</div>
+      <div class="req">{ "username": "admin", "password": "123456", "type": "admin" }</div>
+      <div class="label" style="margin-top:10px">Response</div>
+      <div class="resp" id="r1">{...loading}</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="head"><span class="tag GET">GET</span><span class="url">/api/admin/stats</span><span class="status">200 OK</span></div>
+    <div class="body">
+      <div class="label">Response · 运营数据概览</div>
+      <div class="resp" id="r2">{...loading}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card" style="grid-column:span 2">
+    <div class="head"><span class="tag GET">GET</span><span class="url">/api/items</span><span class="status">200 OK · 6 items</span></div>
+    <div class="body">
+      <div class="label">Response · 在售商品列表</div>
+      <div id="r3"><table><thead><tr><th>ID</th><th>标题</th><th>价格</th><th>原价</th><th>成色</th><th>状态</th><th>浏览</th><th>分类</th></tr></thead><tbody id="tb"></tbody></table></div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="head"><span class="tag GET">GET</span><span class="url">/api/categories</span><span class="status">200 OK</span></div>
+    <div class="body">
+      <div class="label">Response · 商品分类</div>
+      <div class="resp" id="r4">{...loading}</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="head"><span class="tag GET">GET</span><span class="url">/api/users</span><span class="status">200 OK · 3 users</span></div>
+    <div class="body">
+      <div class="label">Response · 注册用户</div>
+      <div class="resp" id="r5">{...loading}</div>
+    </div>
+  </div>
+</div>
+
+<div class="row">
+  <div class="card">
+    <div class="head"><span class="tag POST">POST</span><span class="url">/api/reports</span><span class="status">200 OK</span></div>
+    <div class="body">
+      <div class="label">Request Body</div>
+      <div class="req">{ "reporterId": 1, "itemId": 6, "reportedUserId": 3, "reason": "商品描述与实物差距较大" }</div>
+      <div class="label" style="margin-top:10px">Response</div>
+      <div class="resp" id="r6">{...loading}</div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="head"><span class="tag POST">POST</span><span class="url">/api/favorites</span><span class="status">200 OK</span></div>
+    <div class="body">
+      <div class="label">Request Body</div>
+      <div class="req">{ "userId": 3, "itemId": 1 }</div>
+      <div class="label" style="margin-top:10px">Response</div>
+      <div class="resp" id="r7">{...loading}</div>
+    </div>
+  </div>
+</div>
+
+<p class="footer">校园二手物品交易系统 v1.0.0 · 课程作业 · 后端服务运行于 Tomcat:8080</p>
+
+<script>
+document.getElementById('t').textContent = new Date().toLocaleString('zh-CN');
+const COND = {1:'全新',2:'几乎全新',3:'轻微使用',4:'明显使用',5:'已磨损'};
+const STATUS = {1:'在售',2:'已下架',3:'已售出'};
+const fmt = v => typeof v==='string'?v:JSON.stringify(v,null,2);
+
+async function load(){
+  // 1. 登录
+  const r1 = await fetch('/api/auth/login',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({username:'admin',password:'123456',type:'admin'})});
+  document.getElementById('r1').textContent = fmt(await r1.json());
+  // 2. 统计
+  const r2 = await fetch('/api/admin/stats'); document.getElementById('r2').textContent = fmt(await r2.json());
+  // 3. 商品列表 (表格)
+  const r3 = await fetch('/api/items'); const j3 = await r3.json();
+  document.getElementById('r3').dataset.meta = `共 ${j3.data.length} 条`;
+  document.getElementById('tb').innerHTML = j3.data.map(i=>`<tr><td>${i.itemId}</td><td>${i.title}</td><td>¥${i.price}</td><td>¥${i.originalPrice||'-'}</td><td>${COND[i.conditionLevel]||i.conditionLevel}</td><td>${STATUS[i.status]||i.status}</td><td>${i.viewCount}</td><td>cat#${i.categoryId}</td></tr>`).join('');
+  // 4. 分类
+  const r4 = await fetch('/api/categories'); document.getElementById('r4').textContent = fmt(await r4.json());
+  // 5. 用户
+  const r5 = await fetch('/api/users'); const j5 = await r5.json();
+  document.getElementById('r5').textContent = fmt(j5.data.map(u=>({userId:u.userId,username:u.username,studentId:u.studentId,schoolName:u.schoolName,status:u.status})));
+  // 6. 提交举报
+  const r6 = await fetch('/api/reports',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({reporterId:1,itemId:6,reportedUserId:3,reason:'商品描述与实物差距较大'})});
+  document.getElementById('r6').textContent = fmt(await r6.json());
+  // 7. 收藏
+  const r7 = await fetch('/api/favorites',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({userId:3,itemId:1})});
+  document.getElementById('r7').textContent = fmt(await r7.json());
+  document.body.dataset.ready = '1';
+}
+load();
+</script>
+</body>
+</html>

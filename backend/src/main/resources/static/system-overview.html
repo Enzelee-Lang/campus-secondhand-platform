@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>校园二手物品交易系统 - 后端系统总览</title>
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI","Microsoft YaHei",sans-serif}
+  body{background:#f5f7fa;color:#2d3748;padding:24px 32px}
+  .header{background:linear-gradient(135deg,#1f6feb 0%,#388bfd 100%);color:#fff;padding:24px 32px;border-radius:10px;margin-bottom:20px;display:flex;justify-content:space-between;align-items:center}
+  .title h1{font-size:24px;margin-bottom:4px}
+  .title p{font-size:13px;opacity:.9}
+  .badge{background:rgba(255,255,255,.18);padding:6px 14px;border-radius:16px;font-size:12px;font-weight:600}
+  .row{display:grid;grid-template-columns:1fr 1fr 1fr 1fr;gap:14px;margin-bottom:18px}
+  .stat{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:16px 18px;text-align:center}
+  .stat .num{font-size:28px;font-weight:700;color:#1f6feb;margin-bottom:4px}
+  .stat .label{color:#6a737d;font-size:12px}
+  .grid{display:grid;grid-template-columns:1.1fr 1fr;gap:18px;margin-bottom:18px}
+  .panel{background:#fff;border:1px solid #e1e4e8;border-radius:8px;padding:18px 20px}
+  .panel h2{font-size:15px;color:#1f6feb;margin-bottom:14px;padding-bottom:8px;border-bottom:2px solid #1f6feb}
+  .stack{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+  .stack div{background:#f6f8fa;border:1px solid #e1e4e8;padding:8px 12px;border-radius:6px;font-size:12px}
+  .stack div b{color:#1f6feb}
+  .table{width:100%;border-collapse:collapse;font-size:12px;margin-top:4px}
+  .table th,.table td{padding:7px 9px;border-bottom:1px solid #eaecef;text-align:left}
+  .table th{background:#f6f8fa;color:#6a737d;font-weight:600}
+  .table td{color:#24292e}
+  .endpoint{background:#f6f8fa;border:1px solid #e1e4e8;border-left:3px solid #1f6feb;padding:8px 12px;margin-bottom:6px;border-radius:4px;font-family:Consolas,monospace;font-size:12px;display:flex;align-items:center;gap:10px}
+  .m{display:inline-block;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:700;color:#fff;min-width:48px;text-align:center}
+  .G{background:#1f6feb}.P{background:#2da44e}.U{background:#d29922}.D{background:#cf222e}
+  .footer{margin-top:20px;text-align:center;color:#6a737d;font-size:12px;border-top:1px solid #e1e4e8;padding-top:14px}
+  .ok{display:inline-block;background:#28a745;color:#fff;padding:2px 9px;border-radius:3px;font-size:11px;font-weight:600}
+  .col{font-size:12px;color:#6a737d;margin-bottom:8px}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="title">
+    <h1>校园二手物品交易系统 · 后端系统总览</h1>
+    <p>Campus Second-Hand Trading Platform — Backend System Overview</p>
+  </div>
+  <div class="badge"><span class="ok">● RUNNING</span> &nbsp; Tomcat:8080</div>
+</div>
+
+<div class="row" id="stats">
+  <div class="stat"><div class="num" id="su">-</div><div class="label">注册用户</div></div>
+  <div class="stat"><div class="num" id="si">-</div><div class="label">在售商品</div></div>
+  <div class="stat"><div class="num" id="sa">-</div><div class="label">管理员</div></div>
+  <div class="stat"><div class="num" id="sr">-</div><div class="label">待处理举报</div></div>
+</div>
+
+<div class="grid">
+  <div class="panel">
+    <h2>技术栈 / Tech Stack</h2>
+    <div class="stack">
+      <div><b>核心框架</b><br/>Spring Boot 3.4.5</div>
+      <div><b>数据访问</b><br/>Spring Data JPA + Hibernate 6.6</div>
+      <div><b>数据库</b><br/>MySQL 9.5.0</div>
+      <div><b>连接池</b><br/>HikariCP</div>
+      <div><b>Web 容器</b><br/>Tomcat 10.1.40 (embedded)</div>
+      <div><b>API 文档</b><br/>springdoc-openapi 2.7.0 / Swagger UI 3</div>
+      <div><b>JSON 处理</b><br/>Jackson + JSR-310</div>
+      <div><b>密码加密</b><br/>MD5 + 工具类</div>
+      <div><b>开发语言</b><br/>Java 17 (JDK 17.0.18)</div>
+      <div><b>构建工具</b><br/>Maven 3.9.6 + 阿里云镜像</div>
+    </div>
+  </div>
+  <div class="panel">
+    <h2>系统运行信息</h2>
+    <table class="table">
+      <tr><th>服务地址</th><td>http://localhost:8080</td></tr>
+      <tr><th>应用启动</th><td>2026-09-02 20:47:08</td></tr>
+      <tr><th>启动耗时</th><td>8.696 秒</td></tr>
+      <tr><th>JPA 仓库</th><td>8 个 Repository (User/Item/Category/Admin/Review/Favorite/Message/Report)</td></tr>
+      <tr><th>REST 控制器</th><td>9 个 (Auth/User/Item/Category/Review/Favorite/Message/Report/Admin)</td></tr>
+      <tr><th>REST 接口</th><td>30+ 个 @RequestMapping 端点</td></tr>
+      <tr><th>数据库表</th><td>8 张业务表 (t_user/t_item/t_category/t_admin/t_review/t_favorite/t_message/t_report)</td></tr>
+      <tr><th>连接池状态</th><td><span class="ok">HikariPool-1 - Active:0 Idle:2</span></td></tr>
+      <tr><th>JVM 内存</th><td>Heap: 256MB / Non-Heap: 96MB</td></tr>
+      <tr><th>当前时间</th><td id="now">-</td></tr>
+    </table>
+  </div>
+</div>
+
+<div class="grid">
+  <div class="panel" style="grid-column:span 2">
+    <h2>数据库表结构 (campus_second_hand)</h2>
+    <table class="table">
+      <thead><tr><th>表名</th><th>说明</th><th>主键</th><th>核心字段</th><th>记录数</th></tr></thead>
+      <tbody>
+        <tr><td><b>t_user</b></td><td>注册用户</td><td>user_id</td><td>username, password(MD5), email, phone, student_id, school_name, status</td><td id="cu">-</td></tr>
+        <tr><td><b>t_item</b></td><td>二手商品</td><td>item_id</td><td>user_id, category_id, title, price, original_price, condition_level, status, view_count</td><td id="ci">-</td></tr>
+        <tr><td><b>t_category</b></td><td>商品分类</td><td>category_id</td><td>name, parent_id, sort_order</td><td>6</td></tr>
+        <tr><td><b>t_admin</b></td><td>管理员</td><td>admin_id</td><td>username, password, role, status</td><td>1</td></tr>
+        <tr><td><b>t_review</b></td><td>交易评价</td><td>review_id</td><td>reviewer_id, target_user_id, item_id, rating, content, reply</td><td>2</td></tr>
+        <tr><td><b>t_favorite</b></td><td>用户收藏</td><td>(user_id, item_id) 复合主键</td><td>create_time</td><td>3</td></tr>
+        <tr><td><b>t_message</b></td><td>站内消息</td><td>msg_id</td><td>sender_id, receiver_id, item_id, content, msg_type, is_read</td><td>3</td></tr>
+        <tr><td><b>t_report</b></td><td>违规举报</td><td>report_id</td><td>reporter_id, item_id, reported_user_id, reason, status</td><td>1</td></tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+<div class="grid" style="grid-template-columns:1fr 1fr">
+  <div class="panel">
+    <h2>REST 接口列表（核心）</h2>
+    <div class="endpoint"><span class="m P">POST</span>/api/auth/register &nbsp;用户注册</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/auth/login &nbsp;&nbsp;&nbsp;&nbsp;登录（用户/管理员）</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/users &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;用户列表</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/users/{id} &nbsp;&nbsp;&nbsp;&nbsp;用户详情</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/users/{id} &nbsp;&nbsp;&nbsp;&nbsp;修改个人信息</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/items &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;商品列表（支持分类/关键词过滤）</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/items/{id} &nbsp;&nbsp;&nbsp;&nbsp;商品详情（浏览量+1）</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/items &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发布商品</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/items/{id} &nbsp;&nbsp;&nbsp;&nbsp;修改商品</div>
+    <div class="endpoint"><span class="m D">DEL</span>/api/items/{id} &nbsp;&nbsp;&nbsp;&nbsp;删除商品</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/categories &nbsp;&nbsp;&nbsp;分类列表</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/reviews &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;发表评价</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/favorites &nbsp;&nbsp;&nbsp;添加收藏</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/messages &nbsp;&nbsp;&nbsp;发送站内消息</div>
+  </div>
+  <div class="panel">
+    <h2>REST 接口列表（管理端）</h2>
+    <div class="endpoint"><span class="m G">GET</span>/api/admin/stats &nbsp;&nbsp;&nbsp;运营数据概览</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/admin/users &nbsp;&nbsp;全部用户</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/admin/users/{id}/status &nbsp;禁用/启用用户</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/admin/items &nbsp;&nbsp;全部商品</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/admin/items/{id}/off &nbsp;下架商品</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/reviews/target/{uid} &nbsp;用户收到的评价</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/reviews/item/{id} &nbsp;&nbsp;&nbsp;商品评价</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/reviews/{id}/reply &nbsp;&nbsp;&nbsp;卖家回复</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/messages/inbox/{uid} &nbsp;收件箱</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/messages/unread/{uid} &nbsp;未读数量</div>
+    <div class="endpoint"><span class="m P">POST</span>/api/reports &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;提交举报</div>
+    <div class="endpoint"><span class="m G">GET</span>/api/reports?status= &nbsp;举报列表</div>
+    <div class="endpoint"><span class="m U">PUT</span>/api/reports/{id}/handle &nbsp;处理举报</div>
+    <div class="endpoint"><span class="m G">GET</span>/swagger-ui/index.html &nbsp;接口文档（Swagger UI）</div>
+  </div>
+</div>
+
+<div class="panel" style="margin-top:18px">
+  <h2>项目结构 D:\campus-backend</h2>
+  <pre style="font-family:Consolas,monospace;font-size:12px;color:#24292e;line-height:1.55;background:#f6f8fa;padding:14px;border-radius:6px;border:1px solid #e1e4e8">campus-backend/
+├── pom.xml                                     &lt;-- Spring Boot 3.4.5 + JPA + MySQL + springdoc
+├── mvnw / mvnw.cmd                             &lt;-- Maven Wrapper
+└── src/
+    ├── main/
+    │   ├── java/com/campus/
+    │   │   ├── CampusBackendApplication.java   &lt;-- 启动类 (@SpringBootApplication)
+    │   │   ├── common/Result.java              &lt;-- 统一返回结构
+    │   │   ├── config/CorsConfig.java          &lt;-- 全局跨域
+    │   │   ├── controller/                     &lt;-- REST 控制器层
+    │   │   │   ├── AuthController              &lt;-- 登录/注册
+    │   │   │   ├── UserController              &lt;-- 用户管理
+    │   │   │   ├── ItemController              &lt;-- 商品管理
+    │   │   │   ├── CategoryController          &lt;-- 分类管理
+    │   │   │   ├── ReviewController            &lt;-- 评价
+    │   │   │   ├── FavoriteController          &lt;-- 收藏
+    │   │   │   ├── MessageController           &lt;-- 站内消息
+    │   │   │   ├── ReportController            &lt;-- 违规举报
+    │   │   │   ├── AdminController             &lt;-- 后台管理
+    │   │   │   └── SystemController            &lt;-- 系统根信息
+    │   │   ├── dto/                            &lt;-- 请求 DTO
+    │   │   ├── entity/                         &lt;-- JPA 实体 (8 张表)
+    │   │   ├── repository/                     &lt;-- 数据访问层 (8 个)
+    │   │   └── util/Md5Util.java               &lt;-- 密码加密
+    │   └── resources/
+    │       ├── application.properties          &lt;-- 数据源/JPA/Swagger 配置
+    │       └── static/api-console.html         &lt;-- API 调用演示控制台
+    └── test/...</pre>
+</div>
+
+<div class="footer">校园二手物品交易系统 v1.0.0 · 课程作业 · 端口 8080 · 运行于本机</div>
+
+<script>
+document.getElementById('now').textContent = new Date().toLocaleString('zh-CN');
+fetch('/api/admin/stats').then(r=>r.json()).then(j=>{
+  const d=j.data;
+  document.getElementById('su').textContent=d.userCount;
+  document.getElementById('si').textContent=d.itemCount;
+  document.getElementById('sa').textContent=d.adminCount;
+  document.getElementById('sr').textContent=d.pendingReportCount;
+  document.getElementById('cu').textContent=d.userCount;
+  document.getElementById('ci').textContent=d.itemCount;
+  document.body.dataset.ready='1';
+});
+</script>
+</body>
+</html>
