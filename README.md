@@ -5,6 +5,10 @@
 
 > 技术栈：`Vue 3.5` `Vite 6` `Tailwind CSS 4` `Pinia` `Vue Router` `Axios` ｜ `Spring Boot 3.4.5` `Java 17` `Spring Data JPA` `MySQL` `springdoc-openapi`
 
+[![CI](https://github.com/Enzelee-Lang/campus-secondhand-platform/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/Enzelee-Lang/campus-secondhand-platform/actions/workflows/ci.yml)
+[![Frontend](https://img.shields.io/badge/frontend-Vue%203.5-42b883)](#技术栈)
+[![Backend](https://img.shields.io/badge/backend-Spring%20Boot%203.4.5-6db33f)](#技术栈)
+
 ## 页面预览
 
 | 登录页 | 用户工作台 | 商品广场 |
@@ -14,6 +18,10 @@
 | 商品详情 | 发布闲置 | 管理端仪表盘 |
 |---|---|---|
 | ![](frontend/docs/screenshots/04-商品详情.png) | ![](frontend/docs/screenshots/05-发布商品.png) | ![](frontend/docs/screenshots/08-管理端仪表盘.png) |
+
+### 流程演示
+
+![校园二手交易平台流程演示](frontend/docs/screenshots/demo.gif)
 
 更多截图见：[`frontend/docs/screenshots`](frontend/docs/screenshots)
 
@@ -85,14 +93,23 @@ campus-secondhand-platform/
 # 创建数据库 campus_second_hand，然后导入：
 # database/campus_second_hand.sql
 
-# 2. 启动后端（端口 8080）
+# 2. 配置数据库环境变量（不要提交真实密码）
+# Windows PowerShell
+$env:MYSQL_USERNAME="root"
+$env:MYSQL_PASSWORD="your_local_password"
+# macOS / Linux
+export MYSQL_USERNAME=root
+export MYSQL_PASSWORD=your_local_password
+# 如不是默认本地地址，再设置 MYSQL_URL
+
+# 3. 启动后端（端口 8080）
 cd backend
 # Windows
 mvnw.cmd spring-boot:run
 # macOS / Linux
 ./mvnw spring-boot:run
 
-# 3. 启动前端（端口 5173）
+# 4. 启动前端（端口 5173）
 cd frontend
 npm install
 npm run dev
@@ -101,7 +118,7 @@ npm run dev
 打开前端：<http://localhost:5173>  
 接口文档：<http://localhost:8080/swagger-ui.html>
 
-> 数据库连接配置在 `backend/src/main/resources/application.properties`。本仓库保留的是本地课程演示配置，部署到公共环境前请改为环境变量/密钥管理。
+> 数据库连接配置在 `backend/src/main/resources/application.properties`，当前已改为读取 `MYSQL_URL` / `MYSQL_USERNAME` / `MYSQL_PASSWORD` 环境变量。
 
 ## 演示账号
 

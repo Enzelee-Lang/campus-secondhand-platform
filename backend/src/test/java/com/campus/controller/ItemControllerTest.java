@@ -2,6 +2,7 @@ package com.campus.controller;
 
 import com.campus.entity.Item;
 import com.campus.repository.ItemRepository;
+import com.campus.repository.PriceHistoryRepository;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.DisplayName;
 import org.springframework.test.context.ActiveProfiles;
@@ -34,6 +35,7 @@ class ItemControllerTest {
     @Autowired ObjectMapper mapper;
 
     @MockBean ItemRepository itemRepository;
+    @MockBean PriceHistoryRepository priceHistoryRepository;
 
     private Item sampleItem() {
         Item it = new Item();
